@@ -14,12 +14,15 @@ public class AvaliacaoController {
     public AvaliacaoController(AvaliacaoRepository repository) {
         this.repository = repository;
     }
-
     @PostMapping
     public ResponseEntity<Avaliacao> criarAvaliacao(@RequestBody Avaliacao avaliacao) {
+
+        avaliacao.setId(null);
+
         if (avaliacao.getNota() < 0 || avaliacao.getNota() > 10) {
             return ResponseEntity.badRequest().build();
         }
+
         Avaliacao salva = repository.save(avaliacao);
         return ResponseEntity.ok(salva);
     }
